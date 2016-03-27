@@ -1,0 +1,57 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="urn:WashOut" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="rumbas"
+	targetNamespace="urn:WashOut">
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema"
+			attributeFormDefault="unqualified" elementFormDefault="qualified"
+			targetNamespace="urn:WashOut">
+			<element name="integer_to_string_request">
+				<complexType>
+					<sequence>
+						<element name="number" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="integer_to_string_response">
+				<complexType>
+					<sequence>
+						<element name="result" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+	<message name="integer_to_string">
+		<part name="payload" element="tns:integer_to_string_request" />
+	</message>
+	<message name="integer_to_string_response">
+		<part name="payload" element="tns:integer_to_string_response" />
+	</message>
+	<portType name="rumbas_port">
+		<operation name="integer_to_string">
+			<input message="tns:integer_to_string" />
+			<output message="tns:integer_to_string_response" />
+		</operation>
+	</portType>
+	<binding name="rumbas_binding" type="tns:rumbas_port">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="integer_to_string">
+			<soap:operation soapAction="integer_to_string" />
+			<input>
+				<soap:body use="literal" namespace="urn:WashOut" />
+			</input>
+			<output>
+				<soap:body use="literal" namespace="urn:WashOut" />
+			</output>
+		</operation>
+	</binding>
+	<service name="service">
+		<port name="rumbas_port" binding="tns:rumbas_binding">
+			<soap:address location="http://localhost:3000/rumbas/action" />
+		</port>
+	</service>
+</definitions>
